@@ -77,7 +77,7 @@ def get_down_block(
             f"It is recommended to provide `attention_head_dim` when calling `get_down_block`. Defaulting `attention_head_dim` to {num_attention_heads}."
         )
         attention_head_dim = num_attention_heads
-    print(f'down num layer:{num_layers}')
+    # print(f'down num layer:{num_layers}')
     down_block_type = down_block_type[7:] if down_block_type.startswith("UNetRes") else down_block_type
     if down_block_type == "DownBlock2D":
         return DownBlock2D(
@@ -437,7 +437,7 @@ def get_up_block(
             f"It is recommended to provide `attention_head_dim` when calling `get_up_block`. Defaulting `attention_head_dim` to {num_attention_heads}."
         )
         attention_head_dim = num_attention_heads
-    print(f'up num layer:{num_layers}')
+    # print(f'up num layer:{num_layers}')
 
     up_block_type = up_block_type[7:] if up_block_type.startswith("UNetRes") else up_block_type
     if up_block_type == "UpBlock2D":

@@ -26,7 +26,6 @@ def parse_args():
     parser = argparse.ArgumentParser(description="DreamLite Inference Script")
     
     # Model & Structure
-    # 这里不再指向具体的 .pt 文件，而是指向整个 diffusers 目录（或以后填入 Hugging Face 的 Repo ID，如 "Carlo/DreamLite"）
     parser.add_argument("--model_id", type=str, default="models/DreamLite-base")
         
     # Inference Params
@@ -34,10 +33,11 @@ def parse_args():
     parser.add_argument("--weight_dtype", type=str, default="bfloat16", choices=["float16", "bfloat16", "float32"])
     parser.add_argument("--num_inference_steps", type=int, default=28)
     parser.add_argument("--prompt", type=str, default="a dog running on the grass")
+    parser.add_argument("--negative_prompt", type=str, default="")
     parser.add_argument("--image_path", type=str, default="")
     parser.add_argument("--width", type=int, default=1024)
     parser.add_argument("--height", type=int, default=1024)
-    parser.add_argument("--guidance_scale", type=float, default=7.5)
+    parser.add_argument("--guidance_scale", type=float, default=3.5)
     parser.add_argument("--image_guidance_scale", type=float, default=1.0)
         
     return parser.parse_args()

@@ -163,6 +163,7 @@ class DreamLiteMobilePipeline(
                 attention_mask=tk_out.attention_mask,
                 pixel_values=tk_out.pixel_values,
                 image_grid_thw=tk_out.image_grid_thw,
+                mm_token_type_ids=tk_out.mm_token_type_ids,
                 output_hidden_states=True
             )
             
@@ -261,6 +262,8 @@ class DreamLiteMobilePipeline(
         height: Optional[int] = None,
         width: Optional[int] = None,
         num_inference_steps: int = 4,
+        guidance_scale: Optional[float] = None,
+        image_guidance_scale: Optional[float] = None,
         sigmas: Optional[List[float]] = None,
         num_images_per_prompt: Optional[int] = 1,
         generator: Optional[Union[torch.Generator, List[torch.Generator]]] = None,
