@@ -3,7 +3,7 @@
 This document provides instructions for training and performing inference with Low-Rank Adaptation (LoRA) on the DreamLite model. LoRA allows you to efficiently fine-tune DreamLite for specific artistic styles, subjects, or domains with minimal computational overhead.
 
 <div align='center'>
-<img src="../assets/lora.png" class="interpolation-image" alt="LoRA fine-tuning example. The left image is the original image, and the right images are the fine-tuned images with yarn art style LoRA." width="100%" />
+<img src="../assets/lora.png" class="interpolation-image" alt="LoRA fine-tuning example. We show the results of text-to-image generation and image-to-image editing under Ghibli-style/Yarn-art-style/Snoopy-style/Irasutoya-style LoRA fine-tuning." width="100%" />
 </div>
 
 ## 📁 Repository Structure
@@ -12,7 +12,8 @@ The necessary scripts for LoRA customization are located within this directory:
 
 | Script | Path | Description |
 | :--- | :--- | :--- |
-| **Training** | `train_lora.py` | Core script for executing LoRA fine-tuning on custom datasets. |
+| **Training** | `train_gen_lora.py` | Core script for executing text-to-image generation LoRA fine-tuning on custom datasets. |
+| **Training** | `train_edit_lora.py` | Core script for executing image-to-image editing LoRA fine-tuning on custom datasets. |
 | **Inference** | `infer_lora.py` | Script for generating or editing images utilizing the trained LoRA weights. |
 
 ## 🚀 Training

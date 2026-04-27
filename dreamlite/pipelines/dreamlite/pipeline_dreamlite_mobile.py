@@ -163,7 +163,7 @@ class DreamLiteMobilePipeline(
                 attention_mask=tk_out.attention_mask,
                 pixel_values=tk_out.pixel_values,
                 image_grid_thw=tk_out.image_grid_thw,
-                mm_token_type_ids=tk_out.mm_token_type_ids,
+                # mm_token_type_ids=tk_out.mm_token_type_ids,
                 output_hidden_states=True
             )
             

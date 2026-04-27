@@ -2,7 +2,7 @@ torch
 torchvision
 numpy
 Pillow
-transformers
+transformers==4.57.3
 diffusers
 accelerate
 gradio
