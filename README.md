@@ -51,13 +51,13 @@ Experience real-time generation and editing on an iPhone 17 Pro. No internet con
   </tr>
   <tr>
     <td align="center">
-      <video src="assets/demo1.mov" width="280" autoplay loop muted playsinline></video>
+      <video src="assets/demo1.gif" width="280" autoplay loop muted playsinline></video>
     </td>
     <td align="center">
-      <video src="assets/demo2.mov" width="280" autoplay loop muted playsinline></video>
+      <video src="assets/demo2.gif" width="280" autoplay loop muted playsinline></video>
     </td>
     <td align="center">
-      <video src="assets/demo3.mov" width="280" autoplay loop muted playsinline></video>
+      <video src="assets/demo3.gif" width="280" autoplay loop muted playsinline></video>
     </td>
   </tr>
 </table>

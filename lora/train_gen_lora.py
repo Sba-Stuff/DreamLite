@@ -105,16 +105,16 @@ def main():
 
     def preprocess_train(examples):
         images = [image.convert("RGB") for image in examples["image"]]
-        examples["pixel_values"] = [image_transforms(image) for image in images]
+        examples["target_imgs"] = [image_transforms(image) for image in images]
         examples["prompt"] = examples["text"]
         return examples
 
     train_dataset.set_transform(preprocess_train)
 
     def collate_fn(examples):
-        pixel_values = torch.stack([example["pixel_values"] for example in examples])
+        target_imgs = torch.stack([example["target_imgs"] for example in examples])
         prompts = [example["prompt"] for example in examples]
-        return {"pixel_values": pixel_values, "prompts": prompts}
+        return {"target_imgs": target_imgs, "prompts": prompts}
 
     dataloader = torch.utils.data.DataLoader(
         train_dataset,
@@ -141,12 +141,12 @@ def main():
         # =======================================================
         # TODO: get data from DataLoader
         # for batch in dataloader:
-        #     images = batch["pixel_values"]
+        #     images = batch["target_imgs"]
         #     prompts = batch["text"]
         for batch in dataloader:
             if global_step >= args.max_train_steps:
                 break
-            images = batch['pixel_values'].to(accelerator.device, dtype=torch.bfloat16)
+            images = batch['target_imgs'].to(accelerator.device, dtype=torch.bfloat16)
             prompts = batch['prompts']
         # =======================================================
 

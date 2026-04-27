@@ -14,19 +14,39 @@ The necessary scripts for LoRA customization are located within this directory:
 
 | Script | Path | Description |
 | :--- | :--- | :--- |
-| **Training** | `train_gen_lora.py` | Core script for executing text-to-image generation LoRA fine-tuning on custom datasets. |
-| **Training** | `train_edit_lora.py` | Core script for executing image-to-image editing LoRA fine-tuning on custom datasets. |
-| **Inference** | `infer_lora.py` | Script for generating or editing images utilizing the trained LoRA weights. |
+| **Generation** | `train_gen_lora.py` | Fine-tune generation capabilities (e.g., style transfer, character injection). Conditional latents are explicitly set to `0-tensor`. |
+| **Editing** | `train_edit_lora.py` | Fine-tune image-to-image editing (e.g., specific object replacement). Requires condition image latents and raw `PIL.Image` for `encode_prompt`. |
+| **Inference** | `infer_lora.py` | Script for generating or editing images utilizing the trained LoRA weights via `peft`. |
 
 ## 🚀 Training
 
-To initiate LoRA fine-tuning, run the `train_gen_lora.py` or `train_edit_lora.py` script. You can adjust hyperparameters such as learning rate, batch size, and rank (`--rank`) within the script or via command-line arguments (depending on your setup).
+### 1. Text-to-Image Generation LoRA
+
+For standard generation LoRA (e.g., [Yarn-art-style](https://huggingface.co/datasets/Norod78/Yarn-art-style)), DreamLite acts as a standard diffusion model. The condition image latent `cond_img_in` is replaced with zeros.
 
 ```bash
-# Example command for launching LoRA training
-python lora/train_gen_lora.py \
-    --model_id="./models/DreamLite-base" \
-    --output_dir="./output/output_lora/yarn" \
-    --train_batch_size=1 \
-    --learning_rate=5e-5 \
-    --max_train_steps=2500
+python train_gen_lora.py \
+    --model_id "ByteVisionLab/DreamLite-base" \
+    --output_dir "./output_lora/yarn" \
+    --max_train_steps 2500 \
+    --learning_rate 5e-5
+```
+
+### 2. Image Editing LoRA
+
+For image editing LoRA (e.g., [Snoopy-style](https://huggingface.co/datasets/showlab/OmniConsistency/viewer/default/Snoopy)), DreamLite utilizes in-context spatial concatenation. This means the model requires both the noisy target latents and the encoded source condition latents.
+
+```bash
+python train_edit_lora.py \
+    --model_id "ByteVisionLab/DreamLite-base" \
+    --output_dir "./output_lora/edit_Snoopy" \
+    --max_train_steps 3500 \
+    --default_prompt "transfer the image into Snoopy style"
+```
+
+### 3. Dataset Customization:
+Update the `TODO` block in `train_edit_lora.py` and `train_gen_lora.py`. Your dataloader must yield:
+- `target_imgs`: Tensor of ground truth images [B, 3, 1024, 1024].
+- `prompts`: List of editing instructions. 
+- `source_imgs`: Tensor of condition input images [B, 3, 1024, 1024]. (required for image editing LoRA)
+- `source_imgs_pil`: List of original PIL.Image objects (required for encode_prompt in image editing LoRA).
