@@ -61,7 +61,7 @@ def main():
     if input_image is not None:
         width, height = input_image.size
     else:
-        width, height = args.height, args.width
+        width, height = args.width, args.height
 
     print("Generating image...")
     image = pipeline(

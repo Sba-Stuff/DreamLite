@@ -38,6 +38,7 @@ def parse_args():
     parser.add_argument("--learning_rate", type=float, default=5e-5)
     parser.add_argument("--train_batch_size", type=int, default=1)
     parser.add_argument("--max_train_steps", type=int, default=3500)
+    parser.add_argument("--default_prompt", type=str, default="transfer the image into Snoopy style")
     # parser.add_argument("--dataset_path", type=str, required=True)
     return parser.parse_args()
 
@@ -93,7 +94,8 @@ def main():
     # dataset = MyDataset(args.dataset_path, ...)
     # dataloader = DataLoader(dataset, batch_size=args.train_batch_size, shuffle=True)
     print("Loading dataset...")
-    train_dataset = load_dataset("json", data_files="dataset/OmniConsistency/Snoopy/train.jsonl", split="train")
+    train_dataset = load_dataset("showlab/OmniConsistency", split="Snoopy")
+    DATASET_PATH = "dataset/OmniConsistency"
 
     image_transforms = transforms.Compose([
         transforms.Resize(1024, interpolation=transforms.InterpolationMode.BILINEAR),
@@ -113,7 +115,7 @@ def main():
             if hasattr(tar_item, "convert"):
                 img = tar_item.convert("RGB")
             elif isinstance(tar_item, str):
-                img_path = os.path.join("dataset/OmniConsistency", tar_item)
+                img_path = os.path.join(DATASET_PATH, tar_item)
                 img = Image.open(img_path).convert("RGB")
             else:
                 raise ValueError(f"无法识别的图像格式: {type(tar_item)}")
@@ -125,7 +127,7 @@ def main():
             if hasattr(tar_item, "convert"):
                 img = tar_item.convert("RGB")
             elif isinstance(tar_item, str):
-                img_path = os.path.join("dataset/OmniConsistency", tar_item)
+                img_path = os.path.join(DATASET_PATH, tar_item)
                 img = Image.open(img_path).convert("RGB")
             else:
                 raise ValueError(f"无法识别的图像格式: {type(tar_item)}")
@@ -135,7 +137,7 @@ def main():
         
         # 2. 处理文本 (prompt 列)
         # prompts = examples["prompt"]
-        prompts = ['transfer the image into Snoopy style'] * len(examples["prompt"])
+        prompts = [args.default_prompt] * len(examples["prompt"])
                 
         return {
             "target_imgs": target_imgs,

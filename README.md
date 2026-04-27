@@ -159,9 +159,8 @@ python tools/app.py
 ## 🤗 Checkpoints
 We offer two distinct variants of the DreamLite model to provide an optimal balance between visual fidelity and on-device inference latency.
 
-[!NOTE]
-
-Model weights are currently undergoing safety review. To request early access, please contact us at 📧 klfeng1206@outlook.com
+> [!NOTE]
+> Model weights are currently undergoing safety review. To request early access, please contact us at 📧 klfeng1206@outlook.com
 
 
 <table>
@@ -327,6 +326,11 @@ For detailed instructions, training scripts, and examples, please refer to our d
 ## 🙏 Acknowledgement
 We thank the great work from [SDXL](https://github.com/Stability-AI/generative-models), [SnapGen](https://snap-research.github.io/snapgen/), [Qwen](https://qwen.ai/home) and [TAESDXL](https://github.com/madebyollin/taesd). The work is under supervision from Prof. Wangmeng Zuo.
 
+
+## 🪪 License
+**Code**: Apache-2.0
+
+**Model weights**: see WEIGHTS_LICENSE, CC BY-NC 4.0
 
 ## 📄 Citation
 If our work assists your research, feel free to give us a star ⭐ or cite us using:

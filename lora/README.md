@@ -20,11 +20,11 @@ The necessary scripts for LoRA customization are located within this directory:
 
 ## 🚀 Training
 
-To initiate LoRA fine-tuning, run the `train_lora.py` script. You can adjust hyperparameters such as learning rate, batch size, and rank (`--rank`) within the script or via command-line arguments (depending on your setup).
+To initiate LoRA fine-tuning, run the `train_gen_lora.py` or `train_edit_lora.py` script. You can adjust hyperparameters such as learning rate, batch size, and rank (`--rank`) within the script or via command-line arguments (depending on your setup).
 
 ```bash
 # Example command for launching LoRA training
-python lora/train_lora.py \
+python lora/train_gen_lora.py \
     --model_id="./models/DreamLite-base" \
     --output_dir="./output/output_lora/yarn" \
     --train_batch_size=1 \

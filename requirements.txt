@@ -6,3 +6,8 @@ transformers==4.57.3
 diffusers
 accelerate
 gradio
+safetensors
+dataset
+peft
+tqdm
+einops

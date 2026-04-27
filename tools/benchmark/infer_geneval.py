@@ -28,8 +28,9 @@ from diffusers.utils import load_image
 from einops import rearrange
 from torchvision.utils import make_grid
 from torchvision.transforms import ToTensor
-from modules.model_utils import load_model
 from torch.utils.data import Dataset, DataLoader
+
+from dreamlite import DreamLitePipeline
 
 warnings.filterwarnings("ignore")
 
@@ -101,12 +102,10 @@ def main():
     }[args.weight_dtype]
 
     # 2. Load Model
-    pipeline = load_model(
+    pipeline = DreamLitePipeline.from_pretrained(
         args.model_path,
-        device=args.device,
-        dtype=weight_dtype,
-        mode='other'
-    )
+        torch_dtype=weight_dtype,
+    ).to(args.device)
     pipeline = accelerator.prepare(pipeline)
 
     # 3. Setup Data
@@ -115,7 +114,7 @@ def main():
         save_dir=save_dir,
     )
     loader = accelerator.prepare(DataLoader(dataset))
-    width, height = args.height, args.width
+    width, height = args.width, args.height
 
     # 4. inference
     for batch in tqdm(loader):
