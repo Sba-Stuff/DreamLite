@@ -160,7 +160,15 @@ python tools/app.py
 We offer two distinct variants of the DreamLite model to provide an optimal balance between visual fidelity and on-device inference latency.
 
 > [!NOTE]
-> Model weights are currently undergoing safety review. To request early access, please contact us at 📧 klfeng1206@outlook.com
+> **Model Access:** Model weights are currently undergoing safety review. To request early access, please contact us at 📧 klfeng1206@outlook.com with an email titled **"DreamLite Access Request"**. 
+> 
+> In your email, please ensure to include:
+> 1. **Your Name & Affiliation** (e.g., University, Company, or personal portfolio).
+> 2. **Intended Use Case** (Please briefly describe how you plan to use the DreamLite model).
+
+
+⚠️ **Important Usage and Compliance Notice**:
+By accessing and using these models, you agree to abide by our ethical guidelines. These models must **NOT** be used to generate, edit, or distribute any content that is sexually explicit, pornographic, violent, discriminatory, or otherwise illegal. We strictly prohibit the use of DreamLite for malicious purposes.
 
 
 <table>
