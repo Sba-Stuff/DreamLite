@@ -152,7 +152,7 @@ class DreamLiteMobilePipeline(
             
             txts = [template.format(p) for p in prompts]
             # 注意：移动端此处的 resize 使用了 (224, 224) 提升速度
-            images = [image.resize((224, 224), Image.Resampling.LANCZOS)] * len(prompts)
+            images = [image.resize((256, 256), Image.Resampling.LANCZOS)] * len(prompts)
             
             tk_out = self.processor(
                 text=txts, images=images, padding=True, return_tensors="pt",
@@ -280,7 +280,7 @@ class DreamLiteMobilePipeline(
         dtype = self.text_encoder.dtype
         batch_size = 1  # Note: Currently forced to batch_size 1
 
-        if input_image is not None: width = height = 1024
+        if image is not None: width = height = 1024
         
         if sigmas is None:
             sigmas = np.linspace(1.0, 1 / num_inference_steps, num_inference_steps)

@@ -439,7 +439,7 @@ class DreamLitePipeline(
 
                 if XLA_AVAILABLE:
                     xm.mark_step()
-        print(latents.shape)
+
         # 8. Decode Latents
         if output_type == "latent":
             image_out = latents

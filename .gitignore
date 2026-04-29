@@ -7,6 +7,7 @@ AppleDevice
 infer_mobile_w8a8.py
 modules
 deploy
+tools/app_debug.py
 
 __pycache__/
 *.py[cod]
