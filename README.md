@@ -51,13 +51,13 @@ Experience real-time generation and editing on an iPhone 17 Pro. No internet con
   </tr>
   <tr>
     <td align="center">
-      <img src="assets/demo1.gif" width="280" />
+      <video src="assets/demo1.mp4" width="280" autoplay loop muted playsinline></video>
     </td>
     <td align="center">
-      <img src="assets/demo2.gif" width="280" />
+      <video src="assets/demo2.mp4" width="280" autoplay loop muted playsinline></video>
     </td>
     <td align="center">
-      <img src="assets/demo3.gif" width="280" />
+      <video src="assets/demo3.mp4" width="280" autoplay loop muted playsinline></video>
     </td>
   </tr>
 </table>
@@ -160,41 +160,44 @@ python tools/app.py
 We offer two distinct variants of the DreamLite model to provide an optimal balance between visual fidelity and on-device inference latency.
 
 > [!NOTE]
-> **Model Access:** Model weights are currently undergoing safety review. To request early access, please contact us at 📧 klfeng1206@outlook.com with an email titled **"DreamLite Access Request"**. 
-> 
-> In your email, please ensure to include:
-> 1. **Your Name & Affiliation** (e.g., University, Company, or personal portfolio).
-> 2. **Intended Use Case** (Please briefly describe how you plan to use the DreamLite model).
-
+> **Model Access:** Model weights are currently undergoing safety review. To request access, please fill out our [**Access Request Form**](https://forms.gle/XLhhgxV2PUQw3vvD7).
 
 ⚠️ **Important Usage and Compliance Notice**:
-By accessing and using these models, you agree to abide by our ethical guidelines. These models must **NOT** be used to generate, edit, or distribute any content that is sexually explicit, pornographic, violent, discriminatory, or otherwise illegal. We strictly prohibit the use of DreamLite for malicious purposes.
+By accessing and using these models, you agree to abide by our ethical guidelines. These models are for ***non-commercial, research-only*** use. You must ***NOT*** use them to generate, edit, or distribute any content that is sexually explicit, pornographic, violent, discriminatory, or otherwise illegal. Commercial use and public redistribution of the model weights are strictly prohibited.
 
 
 <table>
 <tr>
-<th align="left">Model Variant</th>
-<th align="center">Params</th>
-<th align="center">Resolution</th>
-<th align="center">Steps</th>
-<th align="center">Guidance</th>
-<!-- <th align="center">Hugging Face Hub</th> -->
+  <th align="left">Model Variant</th>
+  <th align="center">UNet Params</th>
+  <th align="center">Resolution</th>
+  <th align="center">Steps</th>
+  <th align="center">Guidance</th>
+  <!-- <th align="center">Hugging Face Hub</th> -->
 </tr>
 <tr>
-<td><strong>DreamLite (Base)</strong></td>
-<td align="center">0.39B</td>
-<td align="center">1024×1024</td>
-<td align="center">28</td>
-<td align="left">CFG & IMG_CFG</td>
-<!-- <td align="center"><a href="https://huggingface.co/ByteVisionLab/DreamLite-base">🤗 Download</a></td> -->
+  <td><strong>DreamLite (Base)</strong></td>
+  <td align="center">0.39B</td>
+  <td align="center">1024×1024</td>
+  <td align="center">28</td>
+  <td align="left">CFG & IMG_CFG</td>
+  <!-- <td align="center"><a href="https://huggingface.co/carlofkl/DreamLite-base">🤗 Download</a></td> -->
 </tr>
 <tr>
-<td><strong>DreamLite (Mobile)</strong></td>
-<td align="center">0.39B</td>
-<td align="center">1024×1024</td>
-<td align="center">4</td>
-<td align="left">No CFG</td>
-<!-- <td align="center"><a href="https://huggingface.co/ByteVisionLab/DreamLite-mobile">🤗 Download</a></td> -->
+  <td><strong>DreamLite (Mobile)</strong></td>
+  <td align="center">0.39B</td>
+  <td align="center">1024×1024</td>
+  <td align="center">4</td>
+  <td align="left">No CFG</td>
+  <!-- <td align="center"><a href="https://huggingface.co/carlofkl/DreamLite-mobile">🤗 Download</a></td> -->
+</tr>
+<tr>
+  <!-- <td><strong>DreamLite-v1.1 (Mobile)</strong></td>
+  <td align="center">0.39B</td>
+  <td align="center">1024×1024</td>
+  <td align="center">4</td>
+  <td align="left">No CFG</td> -->
+  <!-- <td align="center"><a href="https://huggingface.co/carlofkl/DreamLite-v1.1-mobile">🤗 Download</a></td> -->
 </tr>
 </table>
 
@@ -322,13 +325,16 @@ We provide comprehensive support for LoRA fine-tuning and inference, enabling li
 
 For detailed instructions, training scripts, and examples, please refer to our dedicated **[LoRA Fine-Tuning Guide](lora/README.md)**.
 
+## 🎛️ On-device Deployment
+We provide a complete iOS **[On-device Deployment Reference](deploy/README.md)**, including model export scripts (CoreML + mlx-vlm 4-bit quantization), modified Swift library files, and iOS app source code.
+
 ## 📑 Open-Source Plan
 - [X] Release paper on arXiv
 - [X] Release inference code
 - [X] Release LoRA training
 - [ ] Release model weights on HuggingFace
 - [X] Release online demo
-- [ ] On-device Deployment Reference
+- [X] On-device Deployment Reference
 
 
 ## 🙏 Acknowledgement

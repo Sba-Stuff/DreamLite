@@ -151,7 +151,6 @@ class DreamLiteMobilePipeline(
             )
             
             txts = [template.format(p) for p in prompts]
-            # 注意：移动端此处的 resize 使用了 (224, 224) 提升速度
             images = [image.resize((256, 256), Image.Resampling.LANCZOS)] * len(prompts)
             
             tk_out = self.processor(
