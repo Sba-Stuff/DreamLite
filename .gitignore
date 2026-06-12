@@ -28,3 +28,48 @@ env/
 logs/
 *.log
 .cache/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+.fuse_hidden*
+.Trash-*
+
+# IDE / 编辑器
+.idea/
+*.swp
+*.swo
+*~
+
+# Python 构建/打包产物
+build/
+dist/
+*.egg-info/
+*.egg
+pip-wheel-metadata/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.coverage
+.coverage.*
+htmlcov/
+
+# Jupyter
+*.ipynb_checkpoints
+
+# 临时与个人文件
+*.tmp
+*.bak
+*.orig
+diffuser_test.py

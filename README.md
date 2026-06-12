@@ -33,6 +33,8 @@ Built upon a pruned mobile U-Net backbone, DreamLite unifies multimodal conditio
 
 ## 📰 News
 
+- **[2026.06]** 🎉🎉🎉 DreamLite has been merged into the official [🤗 Diffusers](https://github.com/huggingface/diffusers) library (pending the next release). You can now load and run DreamLite directly via `diffusers`.
+- **[2026.06]** 🎉🎉🎉 Community contribution: [@ENUMERA8OR](https://github.com/ENUMERA8OR) released [dreamlite-comfyui-lowvram](https://github.com/ENUMERA8OR/dreamlite-comfyui-lowvram) — ComfyUI custom nodes and a low-VRAM inference pipeline that runs DreamLite-base at 1024×1024 on 4 GB GPUs.
 - **[2026.04]** 🎉🎉🎉 We officially released the inference code.
 <!-- and model [weights](https://huggingface.co/ByteVisionLab/DreamLite) on Hugging Face. -->
 - **[2026.03]** 🎉🎉🎉 DreamLite is publicly announced! Check out our [project page](https://carlofkl.github.io/dreamlite/) and [arXiv paper](https://arxiv.org/abs/2603.28713).
@@ -91,7 +93,68 @@ DreamLite/
 │   └── DreamLite-mobile/
 ```
 
-### 2. Inference via CLI
+### 2. Inference via 🤗 Diffusers
+
+DreamLite has been merged into the official [🤗 Diffusers](https://github.com/huggingface/diffusers) library. Since the change is not yet included in a stable Diffusers release, please install the latest `main` branch directly from source:
+
+```bash
+pip install git+https://github.com/huggingface/diffusers.git
+```
+
+Model weights are hosted on the **`diffusers` branch** of the following Hugging Face repos:
+- [`carlofkl/DreamLite-base`](https://huggingface.co/carlofkl/DreamLite-base/tree/diffusers) (28-step, high fidelity)
+- [`carlofkl/DreamLite-mobile`](https://huggingface.co/carlofkl/DreamLite-mobile/tree/diffusers) (4-step, ultra fast)
+
+Access is currently gated — please first request access via the [Access Request Form](https://forms.gle/XLhhgxV2PUQw3vvD7). Once approved, you will receive a Hugging Face access **token** from us. Use this token to login locally:
+```bash
+huggingface-cli login   # paste the token we sent you when prompted
+# or non-interactively:
+huggingface-cli login --token <TOKEN>
+```
+`from_pretrained(..., revision="diffusers")` will then automatically download the weights on first use.
+
+Alternatively, you can pre-download the weights with the CLI using the same token:
+```bash
+hf download carlofkl/DreamLite-base   --revision diffusers --local-dir models/DreamLite-base   --token <TOKEN>
+hf download carlofkl/DreamLite-mobile --revision diffusers --local-dir models/DreamLite-mobile --token <TOKEN>
+```
+and then load from the local path: `DreamLitePipeline.from_pretrained("models/DreamLite-base", torch_dtype=dtype)`.
+
+Then you can load and run DreamLite with just a few lines of code:
+
+```python
+import torch
+from diffusers import DreamLitePipeline
+from diffusers.utils import load_image
+
+model_id = "carlofkl/DreamLite-base"
+device = "cuda"
+dtype = torch.float16
+
+pipe = DreamLitePipeline.from_pretrained(model_id, revision="diffusers", torch_dtype=dtype)
+pipe.to(device=device)
+
+# Text-to-image
+image = pipe(
+    prompt="A serene mountain lake at sunrise",
+    generator=torch.Generator(device=device).manual_seed(42),
+).images[0]
+
+image.save("dreamlite_t2i.png")
+
+# Image-to-image (instruction-based edit)
+image_url = "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/astronaut.jpg"
+init_image = load_image(image_url)
+edited = pipe(
+    prompt="make it snowy",
+    image=init_image,
+    generator=torch.Generator(device=device).manual_seed(42),
+).images[0]
+
+edited.save("dreamlite_i2i.png")
+```
+
+### 3. Inference via CLI
 You can readily generate or edit images utilizing our provided command-line interfaces.
 ```bash
 # ==========================================
@@ -113,7 +176,7 @@ python infer_mobile.py --prompt "A portrait of a young woman with flowers."
 python infer_mobile.py --prompt "Change the background to a dense forest." --image_path ./inputs/source.png
 ```
 
-### 3. Benchmark Evaluation
+### 4. Benchmark Evaluation
 We provide comprehensive benchmark evaluation scripts (GenEval & ImgEdit) to facilitate performance comparisons between DreamLite and other state-of-the-art models. Please configure your local dataset paths within `tools/benchmark/infer_geneval.py` and `tools/benchmark/infer_imgedit.py` prior to execution.
 ```bash
 # Run the benchmark evaluation
@@ -142,7 +205,7 @@ edit_img = pipe(prompt="Make the sky more dramatic with orange clouds", image=so
 edit_img.save("output_edit.png")
 ``` -->
 
-### 4. Interactive Gradio Demo
+### 5. Interactive Gradio Demo
 
 We provide a user-friendly web interface powered by Gradio. You can try our live demo on Hugging Face Spaces, or deploy it locally on your own machine (GPU/CPU).
 
@@ -327,6 +390,11 @@ For detailed instructions, training scripts, and examples, please refer to our d
 
 ## 🎛️ On-device Deployment
 We provide a complete iOS **[On-device Deployment Reference](deploy/README.md)**, including model export scripts (CoreML + mlx-vlm 4-bit quantization), modified Swift library files, and iOS app source code.
+
+## 🌐 Community Projects
+We sincerely thank the community for extending DreamLite to broader use cases and hardware. If you have built something on top of DreamLite, feel free to open a PR/Issue and we'd be happy to feature it here.
+
+- **[dreamlite-comfyui-lowvram](https://github.com/ENUMERA8OR/dreamlite-comfyui-lowvram)** by [@ENUMERA8OR](https://github.com/ENUMERA8OR) — ComfyUI custom nodes and a low-VRAM inference pipeline that runs **DreamLite-base at 1024×1024 on a 4 GB NVIDIA GPU** (e.g., GTX 1650 Ti). It enables this through *sequential CPU offload*, *float32 precision*, and a *GQA-aware query-token attention slicing* strategy that preserves DreamLite's grouped-query attention layout (which standard Diffusers attention slicing would break). The repository also bundles ComfyUI workflows for both **DreamLite-base** and **DreamLite-mobile**, plus tiled RealESRGAN upscaling support.
 
 ## 📑 Open-Source Plan
 - [X] Release paper on arXiv

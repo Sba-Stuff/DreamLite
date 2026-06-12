@@ -498,7 +498,6 @@ struct ContentView: View {
     // MARK: - Load models
 
     private func loadModels() async {
-        printMemoryUsage("App启动基础内存")
         statusMessage = "Loading models..."
         do {
             guard let enc = MLXTextEncoder() else {
@@ -506,7 +505,6 @@ struct ContentView: View {
                 return
             }
             try await enc.loadModel()
-            printMemoryUsage("Text Encoder加载完成")
             textEncoder = enc
             let pipe = try DreamLitePipeline()
             pipeline = pipe
@@ -787,34 +785,7 @@ struct ContentView: View {
         }
     }
 
-    // MARK: - MLMultiArray → UIImage
-
-//    private func mlArrayToUIImage(_ array: MLMultiArray) -> UIImage? {
-//        let shape = array.shape.map { $0.intValue }
-//        guard shape.count == 4, shape[1] == 3 else { return nil }
-//        let h = shape[2], w = shape[3]
-//        let total = shape.reduce(1, *)
-//        let ptr = array.dataPointer.bindMemory(to: Float16.self, capacity: total)
-//        var pixels = [UInt8](repeating: 255, count: w * h * 4)
-//        for y in 0..<h {
-//            for x in 0..<w {
-//                for c in 0..<3 {
-//                    let val = Float(ptr[c * h * w + y * w + x])
-//                    let clamped = min(max((val + 1.0) / 2.0, 0), 1)
-//                    pixels[(y * w + x) * 4 + c] = UInt8(clamped * 255)
-//                }
-//            }
-//        }
-//        let colorSpace = CGColorSpaceCreateDeviceRGB()
-//        guard let imgCtx = CGContext(
-//            data: &pixels, width: w, height: h,
-//            bitsPerComponent: 8, bytesPerRow: w * 4,
-//            space: colorSpace,
-//            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
-//        ), let cgImage = imgCtx.makeImage() else { return nil }
-//        return UIImage(cgImage: cgImage)
-//    }
-    // MARK: - MLMultiArray → UIImage (Accelerate 优化版 ~10ms vs 原始 ~300ms)
+    // MARK: - MLMultiArray → UIImage (Accelerate-optimised, ~10ms vs naïve ~300ms)
 
     private func mlArrayToUIImage(_ array: MLMultiArray) -> UIImage? {
         let shape = array.shape.map { $0.intValue }
